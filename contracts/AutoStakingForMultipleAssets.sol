@@ -15,7 +15,7 @@ contract AutoStakingForMultipleAssets {
     // Withdraw LP tokens from MasterChef.
     function withdraw(uint256 _pid, uint256 _amount) public;
 
-    // There are no definition in the MasterChef.sol on SushiSwap
+    // There are no definition in the IMasterChef.sol on SushiSwap
     function userInfo(uint256 _pid, address _user) public view returns (uint256 amount, uint256 rewardDebt);
     function poolInfo(uint256 _pid) public view returns (address lpToken, uint256, uint256, uint256);
     
