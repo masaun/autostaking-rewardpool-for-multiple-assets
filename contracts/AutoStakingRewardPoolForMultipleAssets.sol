@@ -5,7 +5,7 @@ pragma solidity ^0.5.16;
  *         - Fetch $FARM rewards (by DAI, etc...) automatically.
  *         - Stake these $FARM rewards into the profit sharing auto-staking pool automatically.
  */
-contract AutoStakingForMultipleAssets {
+contract AutoStakingRewardPoolForMultipleAssets {
 
     constructor() public {}
 
