@@ -1,31 +1,40 @@
 pragma solidity ^0.5.16;
 
+/// [Note]: @openzeppelin v2.5.1
+import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
+
+
 /**
  * @notice - The AutoStakingForMultipleAssets contract that automate fetching and staking $FARM rewards (that are earned by normal assets)
  *         - Fetch $FARM rewards (by DAI, etc...) automatically.
  *         - Stake these $FARM rewards into the profit sharing auto-staking pool automatically.
  */
 contract AutoStakingRewardPoolForMultipleAssets {
+    using SafeMath for uint;
+
+    /// minimal interval to update rewards earned
+    uint constant INTERVAL = 1 minutes;
+    uint lastUpdated;    /// time last updated
 
     constructor() public {}
 
-    // Deposit LP tokens to MasterChef for SUSHI allocation.
-    function deposit(uint256 _pid, uint256 _amount) public;
+    /***
+     * @notice - Stake (Deposit) "FARM Reward token" into RewardPool every minutes.
+     **/
+    function updateRewardTokenStakeStatus() public {
+        /// only update if at least one interval has passed
+        if (lastUpdated.add(INTERVAL) <= block.timestamp) {
+            
+            /// calculate time passed
+            uint passed = block.timestamp.sub(lastUpdated);
+            
+            /// calculate intervals passed since last update
+            uint time = passed.div(INTERVAL);
 
-    // Withdraw LP tokens from MasterChef.
-    function withdraw(uint256 _pid, uint256 _amount) public;
+            /// update to current timestamp
+            lastUpdated = block.timestamp;
+        }
+    }
 
-    // There are no definition in the IMasterChef.sol on SushiSwap
-    function userInfo(uint256 _pid, address _user) public view returns (uint256 amount, uint256 rewardDebt);
-    function poolInfo(uint256 _pid) public view returns (address lpToken, uint256, uint256, uint256);
-    
-    // Update reward variables for all pools. Be careful of gas spending!
-    function massUpdatePools() public;
-    
-    // View function to see pending SUSHIs on frontend.
-    function pendingSushi(uint256 _pid, address _user) public view returns (uint256 amount);
-
-    // interface reused for pickle
-    function pendingPickle(uint256 _pid, address _user) public view returns (uint256 amount);
 
 }
