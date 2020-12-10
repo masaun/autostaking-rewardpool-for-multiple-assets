@@ -12,8 +12,8 @@ import { GelatoConditionsStandard } from "./gelato/GelatoConditionsStandard.sol"
  *         - Fetch $FARM rewards (by DAI, etc...) automatically.
  *         - Stake these $FARM rewards into the profit sharing auto-staking pool automatically.
  */
-contract AutoStakingRewardPoolForMultipleAssets is GelatoConditionsStandard {
-    using SafeMath for uint;
+contract AutoStakeRewardPoolExecutor is GelatoConditionsStandard {
+    using SafeMath for uint256;
 
     /// minimal interval to update rewards earned
     uint constant INTERVAL = 1 minutes;

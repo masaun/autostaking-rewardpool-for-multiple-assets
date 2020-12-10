@@ -3,10 +3,15 @@ pragma solidity 0.5.16;
 import "./AutoStake.sol";
 import "./Controllable.sol";
 
-contract AutoStakeMultiAsset is Controllable {
+/// [Note]: Addtional contract that is implemented this time (This contract is implemented with Gelato)
+import { AutoStakeRewardPoolExecutor } from "../AutoStakeRewardPoolExecutor.sol";
+
+
+//contract AutoStakeMultiAsset is Controllable {
+contract AutoStakeMultiAsset is Controllable, AutoStakeRewardPoolExecutor {
 
   using SafeERC20 for IERC20;
-  using SafeMath for uint256;
+  //using SafeMath for uint256;
 
   NoMintRewardPool public rewardPool;
   AutoStake public farmAutoStake;
