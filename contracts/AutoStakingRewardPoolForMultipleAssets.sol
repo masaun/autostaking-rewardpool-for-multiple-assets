@@ -44,19 +44,26 @@ contract AutoStakingRewardPoolForMultipleAssets is GelatoConditionsStandard {
     /// Gelato-related methods
     ///---------------------------------------------------
 
+    /***
+     * @notice - Source from: https://docs.gelato.network/creating-an-automated-dapp#conditions
+     **/
     function ok(uint256, bytes memory _conditionData, uint256)
         public
         view
         returns(string memory)
     {
-        uint256 timestamp = abi.decode(_conditionData, (uint256));
-        return timeCheck(timestamp);
+        /// Current Executed-method
+        return updateRewardTokenStakeStatus();
+
+        /// Old executed-method
+        // uint256 timestamp = abi.decode(_conditionData, (uint256));
+        // return timeCheck(timestamp);
     }
 
-    // Specific implementation
-    function timeCheck(uint256 _timestamp) public view returns(string memory) {
-        if (_timestamp <= block.timestamp) return OK;
-        return "NotOkTimestampDidNotPass";
-    }
+    // Specific implementation（Old executed-method）
+    // function timeCheck(uint256 _timestamp) public view returns(string memory) {
+    //     if (_timestamp <= block.timestamp) return OK;
+    //     return "NotOkTimestampDidNotPass";
+    // }
 
 }
