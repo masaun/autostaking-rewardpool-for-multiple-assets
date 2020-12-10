@@ -24,7 +24,7 @@ contract AutoStakingRewardPoolForMultipleAssets is GelatoConditionsStandard {
     /***
      * @notice - Stake (Deposit) "FARM Reward token" into RewardPool every minutes.
      **/
-    function updateRewardTokenStakeStatus() public {
+    function updateRewardTokenStakeStatus() public returns (string memory) {
         /// only update if at least one interval has passed
         if (lastUpdated.add(INTERVAL) <= block.timestamp) {
             
@@ -36,6 +36,8 @@ contract AutoStakingRewardPoolForMultipleAssets is GelatoConditionsStandard {
 
             /// update to current timestamp
             lastUpdated = block.timestamp;
+
+            return "Successful to stake FARM Reward tokens";
         }
     }
 
@@ -46,24 +48,25 @@ contract AutoStakingRewardPoolForMultipleAssets is GelatoConditionsStandard {
 
     /***
      * @notice - Source from: https://docs.gelato.network/creating-an-automated-dapp#conditions
+     * @notice - returned method must be "view" method.
      **/
     function ok(uint256, bytes memory _conditionData, uint256)
         public
         view
-        returns(string memory)
+        returns (string memory)
     {
         /// Current Executed-method
-        return updateRewardTokenStakeStatus();
+        //return updateRewardTokenStakeStatus();
 
         /// Old executed-method
-        // uint256 timestamp = abi.decode(_conditionData, (uint256));
-        // return timeCheck(timestamp);
+        uint256 timestamp = abi.decode(_conditionData, (uint256));
+        return timeCheck(timestamp);
     }
 
     // Specific implementation（Old executed-method）
-    // function timeCheck(uint256 _timestamp) public view returns(string memory) {
-    //     if (_timestamp <= block.timestamp) return OK;
-    //     return "NotOkTimestampDidNotPass";
-    // }
+    function timeCheck(uint256 _timestamp) public view returns(string memory) {
+        if (_timestamp <= block.timestamp) return OK;
+        return "NotOkTimestampDidNotPass";
+    }
 
 }
