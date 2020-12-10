@@ -738,6 +738,7 @@ contract NoMintRewardPool is LPTokenWrapper, IRewardDistributionRecipient, Contr
             );
     }
 
+    // get claimed rewards
     function earned(address account) public view returns (uint256) {
         return
             balanceOf(account)
@@ -786,6 +787,7 @@ contract NoMintRewardPool is LPTokenWrapper, IRewardDistributionRecipient, Contr
         }
     }
 
+    // claim rewards
     function getReward() public updateReward(msg.sender) {
         uint256 reward = earned(msg.sender);
         if (reward > 0) {
