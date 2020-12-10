@@ -3,13 +3,16 @@ pragma solidity ^0.5.16;
 /// [Note]: @openzeppelin v2.5.1
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 
+/// Gelato
+import { GelatoConditionsStandard } from "./gelato/GelatoConditionsStandard.sol";
+
 
 /**
  * @notice - The AutoStakingForMultipleAssets contract that automate fetching and staking $FARM rewards (that are earned by normal assets)
  *         - Fetch $FARM rewards (by DAI, etc...) automatically.
  *         - Stake these $FARM rewards into the profit sharing auto-staking pool automatically.
  */
-contract AutoStakingRewardPoolForMultipleAssets {
+contract AutoStakingRewardPoolForMultipleAssets is GelatoConditionsStandard {
     using SafeMath for uint;
 
     /// minimal interval to update rewards earned
@@ -36,5 +39,24 @@ contract AutoStakingRewardPoolForMultipleAssets {
         }
     }
 
+
+    ///---------------------------------------------------
+    /// Gelato-related methods
+    ///---------------------------------------------------
+
+    function ok(uint256, bytes memory _conditionData, uint256)
+        public
+        view
+        returns(string memory)
+    {
+        uint256 timestamp = abi.decode(_conditionData, (uint256));
+        return timeCheck(timestamp);
+    }
+
+    // Specific implementation
+    function timeCheck(uint256 _timestamp) public view returns(string memory) {
+        if (_timestamp <= block.timestamp) return OK;
+        return "NotOkTimestampDidNotPass";
+    }
 
 }
