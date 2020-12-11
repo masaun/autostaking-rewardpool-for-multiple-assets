@@ -24,7 +24,7 @@ contract AutoStakeRewardPoolExecutor is GelatoConditionsStandard {
     /***
      * @notice - Stake (Deposit) "FARM Reward token" into RewardPool every minutes.
      **/
-    function updateRewardTokenStakeStatus() public returns (string memory) {
+    function updateStakeRewardToken() public returns (string memory) {
         /// only update if at least one interval has passed
         if (lastUpdated.add(INTERVAL) <= block.timestamp) {
             
@@ -56,7 +56,7 @@ contract AutoStakeRewardPoolExecutor is GelatoConditionsStandard {
         returns (string memory)
     {
         /// Current Executed-method
-        //return updateRewardTokenStakeStatus();
+        //return updateStakeRewardToken();
 
         /// Old executed-method
         uint256 timestamp = abi.decode(_conditionData, (uint256));
