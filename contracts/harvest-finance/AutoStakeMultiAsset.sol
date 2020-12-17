@@ -3,6 +3,8 @@ pragma solidity 0.5.16;
 import "./AutoStake.sol";
 import "./Controllable.sol";
 
+
+//contract AutoStakeMultiAsset is Controllable {
 contract AutoStakeMultiAsset is Controllable {
 
   using SafeERC20 for IERC20;
